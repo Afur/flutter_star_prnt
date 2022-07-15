@@ -36,6 +36,7 @@ public class SwiftFlutterStarPrntPlugin: NSObject, FlutterPlugin {
                     info.append(portInfoToDictionary(portInfo: printer as! PortInfo))
                 }
             }
+            
             if ( type == "LAN" || type == "All") {
                 let lanPortInfoArray = try SMPort.searchPrinter(target: "TCP:")
                 for printer in lanPortInfoArray {
@@ -88,6 +89,8 @@ public class SwiftFlutterStarPrntPlugin: NSObject, FlutterPlugin {
              )
         }
     }
+    
+    
     
     public func print(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         let arguments = call.arguments as! Dictionary<String, AnyObject>
@@ -704,6 +707,7 @@ public class SwiftFlutterStarPrntPlugin: NSObject, FlutterPlugin {
 
         return imageToPrint
     }
+
     func sendCommand(portName:String,portSetting:String,command:[UInt8],result: FlutterResult){
         var port :SMPort
         var status: StarPrinterStatus_2 = StarPrinterStatus_2()
@@ -772,6 +776,4 @@ public class SwiftFlutterStarPrntPlugin: NSObject, FlutterPlugin {
           )
         }
     }
-
-
 }
