@@ -4,6 +4,8 @@ import StarIO
 import StarIO_Extension
 
 public class SwiftFlutterStarPrntPlugin: NSObject, FlutterPlugin {
+    var printerManager : StarIoExtManager
+    
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "flutter_star_prnt", binaryMessenger: registrar.messenger())
     let instance = SwiftFlutterStarPrntPlugin()
@@ -18,6 +20,12 @@ public class SwiftFlutterStarPrntPlugin: NSObject, FlutterPlugin {
             case "checkStatus":
                 checkStatus(call, result: result)
                 break;
+            case "connect":
+                connect(call, result: result)
+            break;
+            case "disconnect":
+                disconnect(call, result: result)
+            break;
             case "print":
                 print(call, result: result)
             default:
@@ -90,6 +98,36 @@ public class SwiftFlutterStarPrntPlugin: NSObject, FlutterPlugin {
         }
     }
     
+    public func connect (_ call: FlutterMethodCall, result: @escaping FlutterResult){
+        let arguments = call.arguments as! Dictionary<String, AnyObject>
+        let portName = arguments["portName"] as! String
+        let emulation = arguments["emulation"] as! String
+        
+        
+        printerManager = StarIoExtManager(type:StarIoExtManagerType.standard,
+                                          portName:portName,
+                                      portSettings: getPortSettingsOption(emulation),
+                                   ioTimeoutMillis:10000)
+        
+        
+        let isConnected = printerManager.connect()
+        
+        if(isConnected) {
+            result("Printer connected!")
+        } else {
+            result(FlutterError.init(code: "CONNECTION_ERROR", message: "Printer not connected", details: nil))
+        }
+    }
+    
+    public func disconnect (_ call: FlutterMethodCall, result: @escaping FlutterResult){
+        let isDisconnected = printerManager.disconnect()
+        
+        if(isDisconnected) {
+            result("Printer disconnected!")
+        } else {
+            result(FlutterError.init(code: "DISCONNECTION_ERROR", message: "Printer disconnected", details: nil))
+        }
+    }
     
     
     public func print(_ call: FlutterMethodCall, result: @escaping FlutterResult) {

@@ -91,6 +91,12 @@ public class FlutterStarPrntPlugin : FlutterPlugin, MethodCallHandler {
                 "checkStatus" -> {
                     checkStatus(call, result)
                 }
+                "connect" -> {
+                    connect(call, result)
+                }
+                "disconnect" -> {
+                    disconnect(call, result)
+                }
                 "print" -> {
                     print(call, result)
                 }

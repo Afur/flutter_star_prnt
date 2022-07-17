@@ -11,8 +11,14 @@ class StarPrnt {
   static const MethodChannel _channel =
       const MethodChannel('flutter_star_prnt');
 
+  StarPrnt._();
+
+  static StarPrnt _instance = new StarPrnt._();
+
+  static StarPrnt get instance => _instance;
+
   /// Scan for available printers. Have specify [StarPortType] of the printer
-  static Future<List<PortInfo>> portDiscovery(StarPortType portType) async {
+  Future<List<PortInfo>> portDiscovery(StarPortType portType) async {
     dynamic result =
         await _channel.invokeMethod('portDiscovery', {'type': portType.text});
     if (result is List) {
@@ -25,11 +31,41 @@ class StarPrnt {
   }
 
   /// Check status of printer. Have specify [portName] and [emulation]. Returns [PrinterResponseStatus]. Use [StarMicronicsUtilities] to find suitable emulations.
-  static Future<PrinterResponseStatus> getStatus({
+  Future<PrinterResponseStatus> getStatus({
     required String portName,
     required String emulation,
   }) async {
     dynamic result = await _channel.invokeMethod('checkStatus', {
+      'portName': portName,
+      'emulation': emulation,
+    });
+    return PrinterResponseStatus.fromMap(
+      Map<String, dynamic>.from(result),
+    );
+  }
+
+  /// WORK IN PROGRESS
+  /// Connects to the printer to achieve constant connection with printer. Have specify [portName] and [emulation].
+  Future<PrinterResponseStatus> connect({
+    required String portName,
+    required String emulation,
+  }) async {
+    dynamic result = await _channel.invokeMethod('connect', {
+      'portName': portName,
+      'emulation': emulation,
+    });
+    return PrinterResponseStatus.fromMap(
+      Map<String, dynamic>.from(result),
+    );
+  }
+
+  /// WORK IN PROGRESS
+  /// Disconnects with the printer. Have specify [portName] and [emulation].
+  Future<PrinterResponseStatus> disconnect({
+    required String portName,
+    required String emulation,
+  }) async {
+    dynamic result = await _channel.invokeMethod('disconnect', {
       'portName': portName,
       'emulation': emulation,
     });
