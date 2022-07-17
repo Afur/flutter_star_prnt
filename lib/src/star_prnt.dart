@@ -75,7 +75,7 @@ class StarPrnt {
   }
 
   /// Sends [PrintCommands] to the printer. Have to specify [portName] and [emulation]. Returns [PrinterResponseStatus]
-  static Future<PrinterResponseStatus> sendCommands({
+  Future<PrinterResponseStatus> sendCommands({
     required String portName,
     required String emulation,
     required PrintCommands printCommands,
@@ -92,7 +92,7 @@ class StarPrnt {
 
   /// sends commands to printer to run
   @Deprecated('Use sendCommands instead.')
-  static Future<dynamic> print({
+  Future<dynamic> print({
     required String portName,
     required String emulation,
     required PrintCommands printCommands,
@@ -107,7 +107,7 @@ class StarPrnt {
 
   /// Check status of printer
   @Deprecated('Use getStatus instead.')
-  static Future<dynamic> checkStatus({
+  Future<dynamic> checkStatus({
     required String portName,
     required String emulation,
   }) async {
@@ -117,17 +117,4 @@ class StarPrnt {
     });
     return result;
   }
-
-  // static Future<dynamic> connect({
-  //   required String portName,
-  //   required String emulation,
-  //   bool hasBarcodeReader = false,
-  // }) async {
-  //   dynamic result = await _channel.invokeMethod('connect', {
-  //     'portName': portName,
-  //     'emulation': emulation,
-  //     'hasBarcodeReader': hasBarcodeReader,
-  //   });
-  //   return result;
-  // }
 }
