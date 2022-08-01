@@ -206,7 +206,7 @@ public class FlutterStarPrntPlugin : FlutterPlugin, MethodCallHandler {
     public fun connect(@NonNull call: MethodCall, @NonNull result: Result) {
         val portName: String = call.argument<String>("portName") as String
         val emulation: String = call.argument<String>("emulation") as String
-        val hasBarcodeReader: Boolean? = call.argument<Boolean>("hasBarcodeReader") as Boolean
+        val hasBarcodeReader: Boolean? = call.argument<Boolean?>("hasBarcodeReader") as? Boolean
 
         val portSettings: String? = getPortSettingsOption(emulation)
         var starIoExtManager = this.starIoExtManager
