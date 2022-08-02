@@ -16,6 +16,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   GlobalKey _globalKey = new GlobalKey();
   bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -55,12 +56,12 @@ class _MyAppState extends State<MyApp> {
             TextButton(
               onPressed: () async {
                 List<PortInfo> list =
-                    await StarPrnt.portDiscovery(StarPortType.All);
+                    await StarPrnt.instance.portDiscovery(StarPortType.All);
                 print(list);
                 list.forEach((port) async {
                   print(port.portName);
                   if (port.portName.isNotEmpty) {
-                    print(await StarPrnt.getStatus(
+                    print(await StarPrnt.instance.getStatus(
                       portName: port.portName,
                       emulation: emulationFor(port.modelName),
                     ));
@@ -93,7 +94,7 @@ class _MyAppState extends State<MyApp> {
                         "Within 30 days with receipt\n" +
                         "And tags attached\n";
                     commands.appendBitmapText(text: raster);
-                    print(await StarPrnt.sendCommands(
+                    print(await StarPrnt.instance.sendCommands(
                         portName: port.portName,
                         emulation: emulationFor(port.modelName),
                         printCommands: commands));
@@ -106,12 +107,12 @@ class _MyAppState extends State<MyApp> {
               onPressed: () async {
                 //FilePickerResult file = await FilePicker.platform.pickFiles();
                 List<PortInfo> list =
-                    await StarPrnt.portDiscovery(StarPortType.All);
+                    await StarPrnt.instance.portDiscovery(StarPortType.All);
                 print(list);
                 list.forEach((port) async {
                   print(port.portName);
                   if (port.portName.isNotEmpty) {
-                    print(await StarPrnt.getStatus(
+                    print(await StarPrnt.instance.getStatus(
                       portName: port.portName,
                       emulation: emulationFor(port.modelName),
                     ));
@@ -120,7 +121,7 @@ class _MyAppState extends State<MyApp> {
                     commands.appendBitmap(
                         path:
                             'https://c8.alamy.com/comp/MPCNP1/camera-logo-design-photograph-logo-vector-icons-MPCNP1.jpg');
-                    print(await StarPrnt.sendCommands(
+                    print(await StarPrnt.instance.sendCommands(
                         portName: port.portName,
                         emulation: emulationFor(port.modelName),
                         printCommands: commands));
@@ -153,13 +154,13 @@ class _MyAppState extends State<MyApp> {
                 });
                 //FilePickerResult file = await FilePicker.platform.pickFiles();
                 List<PortInfo> list =
-                    await StarPrnt.portDiscovery(StarPortType.All);
+                    await StarPrnt.instance.portDiscovery(StarPortType.All);
                 print(list);
 
                 list.forEach((port) async {
                   print(port.portName);
                   if (port.portName.isNotEmpty) {
-                    print(await StarPrnt.getStatus(
+                    print(await StarPrnt.instance.getStatus(
                       portName: port.portName,
                       emulation: emulationFor(port.modelName),
                     ));
@@ -171,7 +172,7 @@ class _MyAppState extends State<MyApp> {
                       bothScale: true,
                       alignment: StarAlignmentPosition.Left,
                     );
-                    print(await StarPrnt.sendCommands(
+                    print(await StarPrnt.instance.sendCommands(
                         portName: port.portName,
                         emulation: emulationFor(port.modelName),
                         printCommands: commands));
