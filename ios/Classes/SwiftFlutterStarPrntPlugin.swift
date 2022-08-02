@@ -4,7 +4,7 @@ import StarIO
 import StarIO_Extension
 
 public class SwiftFlutterStarPrntPlugin: NSObject, FlutterPlugin {
-    var printerManager : StarIoExtManager
+    var printerManager : StarIoExtManager?
     
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "flutter_star_prnt", binaryMessenger: registrar.messenger())
@@ -110,7 +110,7 @@ public class SwiftFlutterStarPrntPlugin: NSObject, FlutterPlugin {
                                    ioTimeoutMillis:10000)
         
         
-        let isConnected = printerManager.connect()
+        let isConnected = printerManager!.connect()
         
         if(isConnected) {
             result("Printer connected!")
@@ -120,7 +120,7 @@ public class SwiftFlutterStarPrntPlugin: NSObject, FlutterPlugin {
     }
     
     public func disconnect (_ call: FlutterMethodCall, result: @escaping FlutterResult){
-        let isDisconnected = printerManager.disconnect()
+        let isDisconnected = printerManager!.disconnect()
         
         if(isDisconnected) {
             result("Printer disconnected!")
